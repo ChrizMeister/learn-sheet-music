@@ -1,0 +1,115 @@
+#:kivy 1.0.9
+
+# Code by Christopher Sommerville
+
+
+<PianoWindow>:    
+    name: "pianoScreen"
+
+    canvas.before:
+        Color:
+            rgb: 0.95, 0.95, 0.95
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    canvas:
+        Color:
+            rgb: 0.1, 0.1, 0.1
+        Rectangle:
+            pos: 0, root.top - 100
+            size: root.width, 100
+
+        # Treble clef lines
+        Rectangle:
+            group: 'treblelines'
+            pos: 0, root.top - self.topline_treble
+            size: root.width, self.barheight
+
+        Rectangle:
+            group: 'treblelines'
+            pos: 0, root.top - self.topline_treble - self.barspace
+            size: root.width, self.barheight
+
+        Rectangle:
+            group: 'treblelines'
+            pos: 0, root.top - self.topline_treble - self.barspace * 2
+            size: root.width, self.barheight
+
+        Rectangle:
+            group: 'treblelines'
+            pos: 0, root.top - self.topline_treble - self.barspace * 3
+            size: root.width, self.barheight
+
+        Rectangle:
+            group: 'treblelines'
+            pos: 0, root.top - self.bottomline_treble
+            size: root.width, self.barheight
+
+        # Bass clef lines
+        Rectangle:
+            group: 'basslines'
+            pos: 0, root.top - self.topline_bass
+            size: root.width, self.barheight
+
+        Rectangle:
+            group: 'basslines'
+            pos: 0, root.top - self.topline_bass - self.barspace
+            size: root.width, self.barheight
+
+        Rectangle:
+            group: 'basslines'
+            pos: 0, root.top - self.topline_bass - self.barspace * 2
+            size: root.width, self.barheight
+
+        Rectangle:
+            group: 'basslines'
+            pos: 0, root.top - self.topline_bass - self.barspace * 3
+            size: root.width, self.barheight
+
+        Rectangle:
+            group: 'basslines'
+            pos: 0, root.top - self.bottomline_bass
+            size: root.width, self.barheight
+
+        Rectangle:
+            group: 'noteline1'
+            pos: (root.width/2 - (self.barwidth / 2), root.top - self.bottomline_treble) 
+            size: (self.barwidth, self.barheight)
+
+        Rectangle:
+            group: 'noteline2'
+            pos: (root.width/2 - (self.barwidth / 2), root.top - self.bottomline_treble - self.barspace * 2) 
+            size: (self.barwidth, self.barheight)
+    
+    Image:
+        source: "images/treblesmall.png"
+        size: self.texture_size
+        allow_stretch: True
+        keep_ratio: False
+        pos: 10, root.top - 440  
+
+    Image:
+        source: "images/bass.png"
+        size: self.texture_size
+        allow_stretch: True
+        keep_ratio: False
+        pos: 10, root.top - root.bottomline_bass + root.barspace - 2 
+
+    Button:
+        id: notebtn
+        text: "Start"
+        font_size: 20
+        size: 120, 80
+        pos: 10 + 140, root.top - 90
+        on_press: self.background_color = (0.1, 0.7, 0.9, 1)
+        on_press: root.generateNote()
+        on_release: root.remove_widget(self)
+        background_color: 0, 0.55, 1, 1
+
+    Label:
+        id: noteGuess
+        text: "Identify The Note"
+        font_size: 40
+        color: (0.8, 0.8, 0.8)
+        pos: (root.width / 2 - 50, root.top - 100)
